@@ -54,8 +54,6 @@ public class TaskTracker {
         String taskDescription = scanner.next();
         System.out.println("Enter Task Priority ( 1(highest) - 5(lowest)): ");
         int taskPriority = scanner.nextInt();
-        System.out.println("Enter Task Status: ");
-        String taskStatus = scanner.next();
         System.out.println("Enter Task Start Date: ");
         String taskStartDate = scanner.next();
 
@@ -64,8 +62,8 @@ public class TaskTracker {
 
     private static void listTasks() {
         System.out.println("\nList of Tasks: ");
-        //Show Tasks
 
+        //Show Tasks
     }
 
     private static void updateTask(Scanner scanner) {
