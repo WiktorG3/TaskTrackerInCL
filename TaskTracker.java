@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class TaskTracker {
@@ -47,6 +49,9 @@ public class TaskTracker {
         scanner.close();
     }
 
+    private static int taskIdCounter = 1;
+    private static List<Task> taskList = new ArrayList<>();
+
     private static void addTask(Scanner scanner) {
         System.out.println("Enter Task Title: ");
         String taskTitle = scanner.next();
@@ -58,12 +63,22 @@ public class TaskTracker {
         String taskStartDate = scanner.next();
 
         //Add Task
+        Task newTask = new Task(taskIdCounter++, taskTitle, taskDescription, taskPriority, taskStartDate);
+        taskList.add(newTask);
+        System.out.println("Task Added: " + newTask);
     }
 
     private static void listTasks() {
         System.out.println("\nList of Tasks: ");
 
         //Show Tasks
+        if(taskList.isEmpty()){
+            System.out.println("No Tasks found!");
+        } else {
+            for(Task task : taskList){
+                System.out.println(task);
+            }
+        }
     }
 
     private static void updateTask(Scanner scanner) {
@@ -74,6 +89,14 @@ public class TaskTracker {
     private static void markTaskAsInProgress(Scanner scanner) {
         System.out.println("Enter Task Id to mark task as in progress: ");
         int taskId = scanner.nextInt();
+
+        Task task = findTaskById(taskId);
+        if(task != null){
+            task.setStatus("In Progress");
+            System.out.println("Task Marked as in Progress: " + task);
+        } else {
+            System.out.println("Task not found.");
+        }
     }
 
     private static void markTaskAsCompleted(Scanner scanner) {
@@ -85,5 +108,13 @@ public class TaskTracker {
         int taskId = scanner.nextInt();
     }
 
+    private static Task findTaskById(int taskId) {
+        for(Task task : taskList){
+            if(task.getId() == taskId){
+                return task;
+            }
+        }
+        return null;
+    }
 
 }
