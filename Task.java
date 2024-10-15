@@ -74,6 +74,12 @@ public class Task {
 
     @Override
     public String toString() {
-        return id + ":" + title + ":" + description + ":" + priority + ":" + status + ":" + startDate;
+        return "\n----------------------------\n" +
+                "ID: " + id + " Title: " + title + "\n" +
+                "Description:" + description + "\n" +
+                "Priority:" + priority + "\n" +
+                "Status:" + status + "\n" +
+                "Start Date:" + startDate + "\n" +
+                "----------------------------\n";
     }
 }
