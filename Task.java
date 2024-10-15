@@ -8,6 +8,9 @@ public class Task {
     private String status;
     private String startDate;
 
+    //Required by JSON
+    public Task(){}
+
     public Task(int id, String title, String description, int priority, String startDate) {
         this.id = id;
         this.title = title;
@@ -16,7 +19,7 @@ public class Task {
         this.status = "Not started";
         this.startDate = startDate;
     }
-    //
+    //Getters
     public int getId() {
         return id;
     }
@@ -41,9 +44,29 @@ public class Task {
         return startDate;
     }
 
+    //Setters
+    public void setTitle(String title){
+        this.title = title;
+    }
+
+    public void setDescription(String description){
+        this.description = description;
+    }
+
+    public void setPriority(int priority){
+        this.priority = priority;
+    }
+
+    public void setStartDate(String startDate){
+        this.startDate = startDate;
+    }
+
     public void setStatus(String status) {
         this.status = status;
     }
+
+
+
 
     @Override
     public String toString() {
