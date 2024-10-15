@@ -55,3 +55,5 @@ Additionally, the application automatically saves tasks to a tasks.json file upo
 ### Conclusion
 Task Tracker CLI is a simple and efficient way to manage tasks from the command line. It provides input validation, saves tasks between sessions using a JSON file, and offers a user-friendly interface for managing tasks.
 
+Project idea from https://roadmap.sh/projects/task-tracker
+
