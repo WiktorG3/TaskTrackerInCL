@@ -184,6 +184,10 @@ public class TaskTracker {
         if(task != null){
             taskList.remove(task);
             System.out.println("Task Deleted: " + task);
+            int newId = 1;
+            for(Task remainTask : taskList) {
+                remainTask.setId(newId++);
+            }
         }else{
             System.out.println("Task not found.");
         }
