@@ -2,8 +2,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 
 public class TaskTracker {
     public static void main(String[] args) {
@@ -23,6 +26,8 @@ public class TaskTracker {
             System.out.println("0. Exit");
             System.out.println("What's your choice: ");
             int choice = scanner.nextInt();
+            scanner.nextLine();
+
             switch (choice) {
                 case 1:
                     addTask(scanner);
@@ -59,9 +64,11 @@ public class TaskTracker {
 
     private static void addTask(Scanner scanner) {
         System.out.println("Enter Task Title: ");
-        String taskTitle = scanner.next();
+        String taskTitle = scanner.nextLine();
+
         System.out.println("Enter Task Description: ");
-        String taskDescription = scanner.next();
+        String taskDescription = scanner.nextLine();
+
         int taskPriority = 0;
         boolean validPriority = false;
         // Loop until the user enters a valid priority between 1 and 5
@@ -80,13 +87,27 @@ public class TaskTracker {
                 scanner.next();
             }
         }
-        System.out.println("Enter Task Start Date: ");
-        String taskStartDate = scanner.next();
+        String taskStartDate ="";
+        boolean validDate = false;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        dateFormat.setLenient(false);
+
+        while(!validDate) {
+            System.out.println("Enter Task Start Date (DD-MM-YYYY): ");
+            taskStartDate = scanner.nextLine();
+
+            try {
+                Date date = dateFormat.parse(taskStartDate);
+                validDate = true;
+            } catch (ParseException e) {
+                System.out.println("Invalid input. Please enter a valid date (DD-MM-YYYY)!");
+            }
+        }
 
         //Add Task
         Task newTask = new Task(taskIdCounter++, taskTitle, taskDescription, taskPriority, taskStartDate);
         taskList.add(newTask);
-        System.out.println("Task Added: " + newTask);
+        System.out.println("\nTask Added: " + newTask);
     }
 
     private static void listTasks() {
@@ -122,28 +143,52 @@ public class TaskTracker {
             }
 
             // Update Task Priority (as Integer between 1-5)
+            boolean validPriority = false;
             System.out.print("Enter new Task Priority (1(highest) - 5(lowest), leave blank to keep current): ");
             String newPriority = scanner.nextLine();
+
             if (!newPriority.trim().isEmpty()) {
-                try {
-                    int priority = Integer.parseInt(newPriority);
-                    if (priority >= 1 && priority <= 5) {
-                        task.setPriority(priority);
-                        System.out.println("Task priority updated to: " + priority);
-                    } else {
-                        System.out.println("Invalid priority. Please enter a number between 1 and 5.");
+                while (!validPriority) {
+                    try {
+                        int priority = Integer.parseInt(newPriority);
+                        if (priority >= 1 && priority <= 5) {
+                            task.setPriority(priority);
+                            System.out.println("Task priority updated to: " + priority);
+                            validPriority = true;
+                        } else {
+                            System.out.println("Invalid priority. Please enter a number between 1 and 5.");
+                            System.out.print("Enter new Task Priority (1(highest) - 5(lowest)): ");
+                            newPriority = scanner.nextLine();
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid input. Priority must be a number.");
+                        System.out.print("Enter new Task Priority (1(highest) - 5(lowest)): ");
+                        newPriority = scanner.nextLine();
                     }
-                } catch (NumberFormatException e) {
-                    System.out.println("Invalid input. Priority must be a number.");
                 }
             }
 
-            System.out.print("Enter new Task Start Date (leave blank to keep current): ");
+            boolean validDate = false;
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            dateFormat.setLenient(false);
+
+            System.out.print("Enter new Task Start Date (DD-MM-YYYY, leave blank to keep current): ");
             String newStartDate = scanner.nextLine();
+
             if (!newStartDate.trim().isEmpty()) {
-                task.setStartDate(newStartDate);
+                while (!validDate) {
+                    try {
+                        Date date = dateFormat.parse(newStartDate); // Validate date format
+                        task.setStartDate(newStartDate); // Update task start date
+                        validDate = true;
+                    } catch (ParseException e) {
+                        System.out.println("Invalid date format. Please enter the date in DD-MM-YYYY format.");
+                        System.out.print("Enter new Task Date (DD-MM-YYYY, leave blank to keep current): ");
+                        newStartDate = scanner.nextLine();
+                    }
+                }
             }
-            System.out.println("Task updated successfully.");
+            System.out.println("Task updated successfully." + task);
         }else{
             System.out.println("Task not found!");
         }
