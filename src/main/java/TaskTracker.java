@@ -1,3 +1,5 @@
+package src.main.java;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
@@ -110,7 +112,7 @@ public class TaskTracker {
         System.out.println("\nTask Added: " + newTask);
     }
 
-    private static void listTasks() {
+    static void listTasks() {
         System.out.println("\nList of Tasks: ");
 
         //Show Tasks
@@ -274,5 +276,4 @@ public class TaskTracker {
             System.out.println("Error loading tasks: " + e.getMessage());
         }
     }
-
 }

@@ -1,3 +1,5 @@
+package src.main.java;
+
 import java.util.*;
 
 public class Task {
@@ -68,8 +70,6 @@ public class Task {
     public void setStatus(String status) {
         this.status = status;
     }
-
-
 
 
     @Override
